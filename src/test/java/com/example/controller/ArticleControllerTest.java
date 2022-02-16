@@ -50,9 +50,9 @@ class ArticleControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(new ArticleController(articleService))
                 .setControllerAdvice(globalExceptionHandler).build();
 
-        articleRepresentation1 = new ArticleRepresentation(LocalDate.now(), "New York Times", "Author A", "some test content");
-        articleRepresentation2 = new ArticleRepresentation(LocalDate.now().minusDays(1), "Newsday", "Author A", "some test content xyz");
-        articleRepresentation3 = new ArticleRepresentation(LocalDate.now().minusDays(2), "Washington Post", "Author B", "some test content abc");
+        articleRepresentation1 = new ArticleRepresentation(LocalDate.now(), "New York Times", "Author A", "title1", "some test content");
+        articleRepresentation2 = new ArticleRepresentation(LocalDate.now().minusDays(1), "Newsday", "Author A", "title2", "some test content xyz");
+        articleRepresentation3 = new ArticleRepresentation(LocalDate.now().minusDays(2), "Washington Post", "Author B", "title3", "some test content abc");
 
         ArticlesResponse articlesResponse = new ArticlesResponse(List.of(articleRepresentation1, articleRepresentation2, articleRepresentation3));
 

@@ -9,7 +9,6 @@ import com.example.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,7 +34,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public ArticlesResponse getAllByKeyword(String keyword) {
         return new ArticlesResponse(
-                articleRepository.findByContentContainingIgnoreCase(keyword)
+                articleRepository.findByContainingKeyword(keyword)
                 .stream().map(articleMapper::mapToRepresentation)
                 .collect(Collectors.toList()));
     }

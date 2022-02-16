@@ -13,5 +13,6 @@ public class ArticleRepresentation {
     private LocalDate publicationDate;
     private String journalName;
     private String author;
+    private String title;
     private String content;
 }

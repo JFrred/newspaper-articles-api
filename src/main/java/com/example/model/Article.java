@@ -17,7 +17,7 @@ public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "title_with_contents")
+    private String title;
     private String content;
     @Column(name = "publication_date")
     private LocalDate publicationDate;
