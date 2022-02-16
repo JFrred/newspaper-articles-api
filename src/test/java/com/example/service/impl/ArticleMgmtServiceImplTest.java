@@ -5,7 +5,6 @@ import com.example.mapper.ArticleMapper;
 import com.example.model.Article;
 import com.example.model.Author;
 import com.example.repository.ArticleRepository;
-import org.aspectj.weaver.patterns.OrPointcut;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +17,6 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
@@ -42,9 +40,10 @@ class ArticleMgmtServiceImplTest {
     @BeforeEach
     void setup() {
         articleService = new ArticleMgmtServiceImpl(articleRepository, articleMapper);
+
         article = new Article("title", "content", LocalDate.now(),
                 "journalName", new Author("firstname", "lastname"), Timestamp.from(Instant.now()));
-        articleRequest = new ArticleRequest("Washingto Post", "title", "content", "firstName", "lastName");
+        articleRequest = new ArticleRequest("Washington Post", "title", "content", "firstName", "lastName");
     }
 
     @Test

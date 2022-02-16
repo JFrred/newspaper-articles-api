@@ -43,7 +43,7 @@ public class Article {
     @JoinColumn(name = "author_id")
     private Author author;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
 
     public Article(String title, String content, LocalDate publicationDate, String journalName, Author author, Timestamp createdAt) {
