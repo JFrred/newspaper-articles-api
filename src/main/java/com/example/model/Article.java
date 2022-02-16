@@ -11,9 +11,6 @@ import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 
-import static javax.persistence.CascadeType.MERGE;
-import static javax.persistence.CascadeType.PERSIST;
-
 @Setter
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -40,8 +37,7 @@ public class Article {
     @Column(name = "publication_name")
     private String journalName;
 
-    @ManyToOne(cascade = {MERGE, PERSIST})
-    @JoinColumn(name = "author_id")
+    @Embedded
     private Author author;
 
     @Column(name = "created_at", nullable = false, updatable = false)

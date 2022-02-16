@@ -20,6 +20,7 @@ public class ArticleMgmtServiceImpl implements ArticleMgmtService {
 
     @Override
     public int create(ArticleRequest articleRequest) {
+
         return articleRepository.save(articleMapper.mapRequestToSource(articleRequest)).getId();
     }
 
