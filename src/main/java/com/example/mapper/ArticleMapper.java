@@ -13,4 +13,5 @@ public interface ArticleMapper {
     @Mapping(target = "publicationDate", expression = "java(java.time.LocalDate.now())")
     @Mapping(target = "createdAt", expression = "java(java.sql.Timestamp.from(java.time.Instant.now()))")
     Article mapRequestToSource(ArticleRequest articleRequest);
+
 }
