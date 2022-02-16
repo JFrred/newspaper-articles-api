@@ -20,7 +20,6 @@ public class ArticleMgmtServiceImpl implements ArticleMgmtService {
 
     @Override
     public int create(ArticleRequest articleRequest) {
-
         return articleRepository.save(articleMapper.mapRequestToSource(articleRequest)).getId();
     }
 
@@ -40,6 +39,8 @@ public class ArticleMgmtServiceImpl implements ArticleMgmtService {
 
     @Override
     public void delete(int id) {
-        articleRepository.deleteById(id);
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new ArticleNotFoundException(id));
+        articleRepository.delete(article);
     }
 }

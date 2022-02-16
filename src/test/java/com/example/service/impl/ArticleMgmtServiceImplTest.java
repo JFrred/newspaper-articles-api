@@ -67,9 +67,9 @@ class ArticleMgmtServiceImplTest {
 
     @Test
     void delete() {
-        doNothing().when(articleRepository).deleteById(anyInt());
+        given(articleRepository.findById(anyInt())).willReturn(Optional.of(article));
         articleService.delete(1);
 
-        verify(articleRepository).deleteById(1);
+        verify(articleRepository).delete(article);
     }
 }
