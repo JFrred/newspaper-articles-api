@@ -22,7 +22,7 @@ public class ArticleMgmtController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> update(@PathVariable int id, @RequestBody ArticleRequest articleRequest) {
+    public ResponseEntity<String> update(@PathVariable int id, @Valid @RequestBody ArticleRequest articleRequest) {
         articleMgmtService.update(id, articleRequest);
         return new ResponseEntity<>("Product has been updated", HttpStatus.NO_CONTENT);
     }

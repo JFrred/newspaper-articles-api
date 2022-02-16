@@ -35,8 +35,9 @@ public class Article {
     @Column(name = "publication_date", nullable = false)
     private LocalDate publicationDate;
 
+    @NotNull(message = "Journal name must not be null")
     @NotEmpty(message = "Journal name must not be empty")
-    @Column(name = "publication_name", nullable = false)
+    @Column(name = "publication_name")
     private String journalName;
 
     @ManyToOne(cascade = {MERGE, PERSIST})
