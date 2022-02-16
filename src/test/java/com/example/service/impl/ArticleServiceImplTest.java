@@ -43,7 +43,6 @@ class ArticleServiceImplTest {
     @BeforeEach
     void setup() {
         articleService = new ArticleServiceImpl(articleRepository, articleMapper);
-
     }
 
     @Test

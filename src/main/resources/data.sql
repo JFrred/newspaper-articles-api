@@ -16,5 +16,3 @@ You can identify by doing
     Nmap (Ports i.e. 8081, 9090, 2086)
     Shodan (query: http.component:phpMyAdmin)
     Google Dork (Inurl:/phpMyAdmin Intitle:phpMyAdmin), etc.', now(), 'Infosec write-ups', 'the3d1p4k', '', now());
-
-
