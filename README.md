@@ -1,14 +1,12 @@
 # newspaper-articles-rest-api
 
----
 
 ## About the project
 
-This project is a simple newspaper articles REST service built with Spring Boot. It uses H2 database as a data storage. 
+This project is a simple newspaper articles REST service built with Spring Boot. It uses H2 database as a data storage.
 
----
 ## Quick start
-Project already contains sample data for testing purposes (resources/data.sql), so You just need to clone this repo and run the application. 
+Project already contains sample data for testing purposes (resources/data.sql), so You just need to clone this repo and run the application.
 
 ### clone project
 
@@ -33,12 +31,11 @@ or You can run application directly from Maven using the Spring Boot Maven plugi
 mvn spring-boot:run
 ```
 
----
 
 ## Api requests
 
 * Request for information about all newspapers<br>
-Example: localhost:8080/articles
+  Example: localhost:8080/articles
 * Request for information about specific newspaper<br>
   Example: localhost:8080/articles/1
 
@@ -47,7 +44,7 @@ Example: localhost:8080/articles
 GET /articles
 ``<br>
 Submit a GET request to this URI in order to get information about newspapers sorted by publication date in descending order (from newest to oldest). <br>
-Article information consists of following attributes: publication date, journal name, author name, article title and article content. journal name, publication date, publication title, author name.
+Article information consists of following attributes: publication date, journal name, author name, article title and article content.
 
 ``
 GET /articles/{id}
@@ -57,22 +54,20 @@ Submit a GET request to this URI in order to get information about article with 
 ``
 GET /articles/name?keyword=somekeyword
 `` <br>
-Submit a GET request to this URI in order to get information about article which contain given keyword in their title/content.
+Submit a GET request to this URI in order to get information about articles which contain given keyword in their title/content.
 
 
 ``
 POST /articles
 `` <br>
 Submit a POST request to this URI in order to save new article.<br>
-In the body of the request, include the articleRequest.<br>
+In the body of the request include the [articleRequest](#ArticleRequest).
 
 ``
 PUT /articles/{id}
 `` <br>
-
 Submit a PUT request to this URI in order to update article with given id.<br>
-In the body of the request, include the articleRequest.
-
+In the body of the request include the [articleRequest](#ArticleRequest).
 
 ``
 DELETE /articles/{id}
@@ -80,7 +75,7 @@ DELETE /articles/{id}
 Submit a DELETE request to this URI in order to delete article with given id.
 
 
-### ArticleRequest 
+### ArticleRequest
 #### Example Value
 ```shell 
 {
