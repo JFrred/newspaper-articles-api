@@ -1,6 +1,6 @@
 package com.example.mapper;
 
-import com.example.dto.ArticleCreateRequest;
+import com.example.dto.ArticleRequest;
 import com.example.dto.ArticleRepresentation;
 import com.example.model.Article;
 import org.mapstruct.Mapper;
@@ -10,6 +10,7 @@ import org.mapstruct.Mapping;
 public interface ArticleMapper {
     ArticleRepresentation mapToRepresentation(Article article);
 
-//    @Mapping()
-    Article mapRequestToSource(ArticleCreateRequest articleCreateRequest);
+    @Mapping(target = "publicationDate", expression = "java(java.time.LocalDate.now())")
+    @Mapping(target = "createdAt", expression = "java(java.sql.Timestamp.from(java.time.Instant.now()))")
+    Article mapRequestToSource(ArticleRequest articleRequest);
 }

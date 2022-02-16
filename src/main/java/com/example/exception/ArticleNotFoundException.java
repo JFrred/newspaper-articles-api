@@ -1,7 +1,9 @@
 package com.example.exception;
 
 public class ArticleNotFoundException extends RuntimeException {
-    public ArticleNotFoundException(String message, int id) {
-        super(message + id);
+    private static final String MESSAGE = "Could not find article with id=";
+
+    public ArticleNotFoundException(int id) {
+        super(MESSAGE + id);
     }
 }

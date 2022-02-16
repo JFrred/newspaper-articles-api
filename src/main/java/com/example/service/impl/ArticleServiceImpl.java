@@ -21,21 +21,21 @@ public class ArticleServiceImpl implements ArticleService {
     public ArticlesResponse getAllSortedByDate() {
         return new ArticlesResponse(
                 articleRepository.findByOrderByPublicationDateDesc()
-                .stream().map(articleMapper::mapToRepresentation)
-                .collect(Collectors.toList()));
+                        .stream().map(articleMapper::mapToRepresentation)
+                        .collect(Collectors.toList()));
     }
 
     @Override
     public ArticleRepresentation getById(int id) {
         return articleRepository.findById(id).map(articleMapper::mapToRepresentation)
-                .orElseThrow(() -> new ArticleNotFoundException("Could not find article with id=", id));
+                .orElseThrow(() -> new ArticleNotFoundException(id));
     }
 
     @Override
     public ArticlesResponse getAllByKeyword(String keyword) {
         return new ArticlesResponse(
                 articleRepository.findByContainingKeyword(keyword)
-                .stream().map(articleMapper::mapToRepresentation)
-                .collect(Collectors.toList()));
+                        .stream().map(articleMapper::mapToRepresentation)
+                        .collect(Collectors.toList()));
     }
 }
