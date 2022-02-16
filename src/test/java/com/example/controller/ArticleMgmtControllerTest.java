@@ -29,20 +29,21 @@ class ArticleMgmtControllerTest {
     @MockBean
     private ArticleMgmtService articleMgmtService;
 
-    private ArticleRequest createRequest;
+    private ArticleRequest articleRequest;
 
     @BeforeEach
     void setup() {
         mockMvc = MockMvcBuilders.standaloneSetup(new ArticleMgmtController(articleMgmtService))
                 .setControllerAdvice(new GlobalExceptionHandler())
                 .build();
+
+        articleRequest = new ArticleRequest("New York Times",
+                "Title here", "some content", "firstname", "a");
     }
 
     @Test
     void create_shouldSucceed_status201() throws Exception {
-        createRequest = new ArticleRequest("New York Times",
-                "Title here", "some content", "Author Name");
-        String validRequest = objectMapper.writeValueAsString(createRequest);
+        String validRequest = objectMapper.writeValueAsString(articleRequest);
 
         mockMvc.perform(post(PATH)
                         .content(validRequest)
@@ -53,11 +54,10 @@ class ArticleMgmtControllerTest {
 
     @Test
     void create_shouldFail_status400() throws Exception {
-        createRequest = new ArticleRequest(null, null, null, null);
-        String validRequest = objectMapper.writeValueAsString(createRequest);
+        String invalidRequest = objectMapper.writeValueAsString(new ArticleRequest());
 
         mockMvc.perform(post(PATH)
-                        .content(validRequest)
+                        .content(invalidRequest)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
@@ -65,8 +65,6 @@ class ArticleMgmtControllerTest {
     @Test
     void update_shouldSucceed_withStatus204() throws Exception {
         int articleId = 1;
-        ArticleRequest articleRequest = new ArticleRequest("new journal name",
-                "new title", "new content", "new author");
 
         mockMvc.perform(put(PATH_WITH_ID, articleId)
                         .contentType(MediaType.APPLICATION_JSON)

@@ -5,6 +5,7 @@ import com.example.dto.ArticlesResponse;
 import com.example.exception.ArticleNotFoundException;
 import com.example.mapper.ArticleMapper;
 import com.example.model.Article;
+import com.example.model.Author;
 import com.example.repository.ArticleRepository;
 import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,10 +40,13 @@ class ArticleServiceImplTest {
     private ArticleMapper articleMapper;
 
     private ArticleServiceImpl articleService;
+    @Mock
+    private Author authorA;
 
     @BeforeEach
     void setup() {
         articleService = new ArticleServiceImpl(articleRepository, articleMapper);
+
     }
 
     @Test
@@ -59,7 +63,7 @@ class ArticleServiceImplTest {
     @Test
     void getById() {
         Article article = new Article("title", "content", LocalDate.now(),
-                "journalName", "author", Timestamp.from(Instant.now()));
+                "journalName", authorA, Timestamp.from(Instant.now()));
         given(articleRepository.findById(anyInt())).willReturn(Optional.of(article));
 
         ArticleRepresentation articleResponse = articleService.getById(1);
@@ -87,11 +91,11 @@ class ArticleServiceImplTest {
         Timestamp createdAt = Timestamp.valueOf(LocalDateTime.of(2000, 1, 1, 1, 1, 1));
 
         return List.of(
-                new Article("article1", "content1", currentDate.minusYears(3), "New York Times", "Author A", createdAt),
-                new Article("article2", "content2", currentDate.minusYears(10), "Washington Post", "Author A", createdAt),
-                new Article("article3", "content3", currentDate.minusYears(2), "New York Post", "Author B", createdAt),
-                new Article("article5", "content5", currentDate.minusYears(15), "Washington Post", "Author C", createdAt),
-                new Article("article4", "content4", currentDate.minusYears(6), "New York Times", "Author B", createdAt)
+                new Article("article1", "content1", currentDate.minusYears(3), "New York Times", authorA, createdAt),
+                new Article("article2", "content2", currentDate.minusYears(10), "Washington Post", authorA, createdAt),
+                new Article("article3", "content3", currentDate.minusYears(2), "New York Post", authorA, createdAt),
+                new Article("article5", "content5", currentDate.minusYears(15), "Washington Post", authorA, createdAt),
+                new Article("article4", "content4", currentDate.minusYears(6), "New York Times", authorA, createdAt)
         );
     }
 }

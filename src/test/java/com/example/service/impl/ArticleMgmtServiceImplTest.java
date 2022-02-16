@@ -3,6 +3,7 @@ package com.example.service.impl;
 import com.example.dto.ArticleRequest;
 import com.example.mapper.ArticleMapper;
 import com.example.model.Article;
+import com.example.model.Author;
 import com.example.repository.ArticleRepository;
 import org.aspectj.weaver.patterns.OrPointcut;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,8 +43,8 @@ class ArticleMgmtServiceImplTest {
     void setup() {
         articleService = new ArticleMgmtServiceImpl(articleRepository, articleMapper);
         article = new Article("title", "content", LocalDate.now(),
-                "journalName", "author", Timestamp.from(Instant.now()));
-        articleRequest = new ArticleRequest("Washingto Post", "title", "content", "Author A");
+                "journalName", new Author("firstname", "lastname"), Timestamp.from(Instant.now()));
+        articleRequest = new ArticleRequest("Washingto Post", "title", "content", "firstName", "lastName");
     }
 
     @Test

@@ -4,6 +4,7 @@ import com.example.dto.ArticleRequest;
 import com.example.exception.ArticleNotFoundException;
 import com.example.mapper.ArticleMapper;
 import com.example.model.Article;
+import com.example.model.Author;
 import com.example.repository.ArticleRepository;
 import com.example.service.ArticleMgmtService;
 import lombok.RequiredArgsConstructor;
@@ -23,14 +24,14 @@ public class ArticleMgmtServiceImpl implements ArticleMgmtService {
     }
 
     @Override
-    public int update(int id, ArticleRequest createRequest) {
+    public int update(int id, ArticleRequest updateRequest) {
         Article article = articleRepository.findById(id)
                 .orElseThrow(() -> new ArticleNotFoundException(id));
 
-        article.setJournalName(createRequest.getJournalName());
-        article.setAuthor(createRequest.getAuthor());
-        article.setContent(createRequest.getContent());
-        article.setTitle(createRequest.getTitle());
+        article.setJournalName(updateRequest.getJournalName());
+        article.setAuthor(new Author(updateRequest.getAuthorFirstName(), updateRequest.getAuthorLastName()));
+        article.setContent(updateRequest.getContent());
+        article.setTitle(updateRequest.getTitle());
         article.setPublicationDate(LocalDate.now());
 
         return articleRepository.save(article).getId();

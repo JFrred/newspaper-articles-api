@@ -18,7 +18,10 @@ public class ArticleRequest {
     @NotNull(message = "Content must not be null")
     @NotEmpty(message = "Content must not be empty")
     private String content;
-    @NotNull(message = "Author must not be null")
-    @NotEmpty(message = "Author must not be empty")
-    private String author;
+    @NotNull(message = "Author first name must not be null")
+    @NotEmpty(message = "Author first name must not be empty")
+    private String authorFirstName;
+    @NotNull(message = "Author last name must not be null")
+    @NotEmpty(message = "Author last name must not be empty")
+    private String authorLastName;
 }
