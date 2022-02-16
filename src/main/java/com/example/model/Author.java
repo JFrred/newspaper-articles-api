@@ -12,8 +12,10 @@ import javax.validation.constraints.NotNull;
 @Embeddable
 public class Author {
     @NotNull
+    @Column(name = "author_first_name")
     private String firstName;
 
     @NotNull
+    @Column(name = "author_last_name")
     private String lastName;
 }

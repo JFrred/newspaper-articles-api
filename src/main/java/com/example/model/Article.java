@@ -15,8 +15,8 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@Table(name = "article")
 public class Article {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -34,7 +34,7 @@ public class Article {
 
     @NotNull(message = "Journal name must not be null")
     @NotEmpty(message = "Journal name must not be empty")
-    @Column(name = "publication_name")
+    @Column(name = "journal_name")
     private String journalName;
 
     @Embedded
@@ -43,7 +43,8 @@ public class Article {
     @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
 
-    public Article(String title, String content, LocalDate publicationDate, String journalName, Author author, Timestamp createdAt) {
+    public Article(String title, String content, LocalDate publicationDate,
+                   String journalName, Author author, Timestamp createdAt) {
         this.title = title;
         this.content = content;
         this.publicationDate = publicationDate;
