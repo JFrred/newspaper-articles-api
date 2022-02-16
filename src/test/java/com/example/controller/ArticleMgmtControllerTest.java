@@ -38,7 +38,7 @@ class ArticleMgmtControllerTest {
                 .build();
 
         articleRequest = new ArticleRequest("New York Times",
-                "Title here", "some content", "firstname", "a");
+                "Title here", "some content", "firstname", "lastname");
     }
 
     @Test
@@ -46,20 +46,10 @@ class ArticleMgmtControllerTest {
         String validRequest = objectMapper.writeValueAsString(articleRequest);
 
         mockMvc.perform(post(PATH)
-                        .content(validRequest)
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(validRequest))
                 .andExpect(status().isCreated())
                 .andDo(print());
-    }
-
-    @Test
-    void create_shouldFail_status400() throws Exception {
-        String invalidRequest = objectMapper.writeValueAsString(new ArticleRequest());
-
-        mockMvc.perform(post(PATH)
-                        .content(invalidRequest)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
     }
 
     @Test

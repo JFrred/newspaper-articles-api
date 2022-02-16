@@ -42,28 +42,20 @@ class ArticleControllerTest {
     private ArticleService articleService;
 
     private ArticleRepresentation articleRepresentation1;
-    private ArticleRepresentation articleRepresentation2;
-    private ArticleRepresentation articleRepresentation3;
 
     @BeforeEach
     void setup() {
         mockMvc = MockMvcBuilders.standaloneSetup(new ArticleController(articleService))
                 .setControllerAdvice(globalExceptionHandler).build();
 
-        articleRepresentation1 = new ArticleRepresentation(LocalDate.now(), "New York Times", "Author A", "title1", "some test content");
-        articleRepresentation2 = new ArticleRepresentation(LocalDate.now().minusDays(1), "Newsday", "Author A", "title2", "some test content xyz");
-        articleRepresentation3 = new ArticleRepresentation(LocalDate.now().minusDays(2), "Washington Post", "Author B", "title3", "some test content abc");
-
-        ArticlesResponse articlesResponse = new ArticlesResponse(List.of(articleRepresentation1, articleRepresentation2, articleRepresentation3));
-
-        given(articleService.getAllSortedByDate()).willReturn(articlesResponse);
-        given(articleService.getById(1)).willReturn(articleRepresentation1);
-        given(articleService.getAllByKeyword(anyString())).willReturn(articlesResponse);
-
+        articleRepresentation1 = new ArticleRepresentation(LocalDate.now(), "New York Times",
+                "Author A", "title1", "some test content");
     }
 
     @Test
     void getAll_shouldSucceed() throws Exception {
+        prepareData();
+
         String responseJson = mockMvc.perform(get(PATH))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -76,6 +68,8 @@ class ArticleControllerTest {
 
     @Test
     void getById_shouldSucceed() throws Exception {
+        given(articleService.getById(anyInt())).willReturn(articleRepresentation1);
+
         String responseJson = mockMvc.perform(get(PATH_WITH_ID, 1))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -88,6 +82,7 @@ class ArticleControllerTest {
 
     @Test
     void getById_shouldFail_status404() throws Exception {
+        given(articleService.getById(1)).willReturn(articleRepresentation1);
         given(articleService.getById(anyInt())).willThrow(ArticleNotFoundException.class);
 
         int invalidId = 999;
@@ -97,8 +92,10 @@ class ArticleControllerTest {
     }
 
     @Test
-    void getAllByKeyWord_shouldSucceed() throws Exception {
-        String keyword = "test keyword";
+    void getAllByKeyword_shouldSucceed() throws Exception {
+        prepareData();
+
+        String keyword = "abc";
         String responseJson = mockMvc.perform(get(PATH + "/name")
                         .param("keyword", keyword))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -108,6 +105,16 @@ class ArticleControllerTest {
         ArticlesResponse actualResponse = objectMapper.readValue(responseJson, ArticlesResponse.class);
 
         assertThat(actualResponse.getArticles()).hasSize(3);
+    }
+
+    private void prepareData() {
+        ArticleRepresentation articleRepresentation2 = new ArticleRepresentation(LocalDate.now().minusDays(1), "Newsday", "Author A", "title2", "some test content xyz");
+        ArticleRepresentation articleRepresentation3 = new ArticleRepresentation(LocalDate.now().minusDays(2), "Washington Post", "Author B", "title3", "some test content abc");
+
+        ArticlesResponse articlesResponse = new ArticlesResponse(List.of(articleRepresentation1, articleRepresentation2, articleRepresentation3));
+
+        given(articleService.getAllSortedByDate()).willReturn(articlesResponse);
+        given(articleService.getAllByKeyword(anyString())).willReturn(articlesResponse);
     }
 
 }

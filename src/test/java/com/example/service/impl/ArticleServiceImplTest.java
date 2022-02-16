@@ -7,12 +7,9 @@ import com.example.mapper.ArticleMapper;
 import com.example.model.Article;
 import com.example.model.Author;
 import com.example.repository.ArticleRepository;
-import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -21,25 +18,25 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 
-@ExtendWith(MockitoExtension.class)
 @SpringBootTest
 class ArticleServiceImplTest {
+
     @MockBean
     private ArticleRepository articleRepository;
     @Autowired
     private ArticleMapper articleMapper;
 
     private ArticleServiceImpl articleService;
+
     @Mock
     private Author authorA;
 
@@ -50,7 +47,7 @@ class ArticleServiceImplTest {
     }
 
     @Test
-    void getAllSortedByDate() {
+    void getAllSortedByDate_shouldSucceed() {
         given(articleRepository.findByOrderByPublicationDateDesc()).willReturn(mockedData());
         ArticlesResponse sortedArticles = articleService.getAllSortedByDate();
 
@@ -61,7 +58,7 @@ class ArticleServiceImplTest {
     }
 
     @Test
-    void getById() {
+    void getById_shouldSucceed() {
         Article article = new Article("title", "content", LocalDate.now(),
                 "journalName", authorA, Timestamp.from(Instant.now()));
         given(articleRepository.findById(anyInt())).willReturn(Optional.of(article));
@@ -78,7 +75,7 @@ class ArticleServiceImplTest {
     }
 
     @Test
-    void getAllByKeyword() {
+    void getAllByKeyword_shouldSucceed() {
         given(articleRepository.findByContainingKeyword(anyString())).willReturn(mockedData());
 
         ArticlesResponse articles = articleService.getAllByKeyword("keyword");
